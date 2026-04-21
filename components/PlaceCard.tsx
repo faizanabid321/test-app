@@ -11,17 +11,32 @@ import { Ionicons } from '@expo/vector-icons';
 import { Place } from '@/types/place';
 import { RatingStars } from './RatingStars';
 import { colors } from '@/constants/colors';
+import { useFavorites } from '@/hooks/useFavorites';
 
 interface PlaceCardProps {
   place: Place;
   compact?: boolean;
+  showDistance?: boolean;
+  distance?: number;
 }
 
-export const PlaceCard: React.FC<PlaceCardProps> = ({ place, compact = false }) => {
+export const PlaceCard: React.FC<PlaceCardProps> = ({ 
+  place, 
+  compact = false,
+  showDistance = false,
+  distance
+}) => {
   const router = useRouter();
+  const { checkIsFavorite, toggleFavorite } = useFavorites();
+  const isFavorite = checkIsFavorite(place.id);
 
   const handlePress = () => {
     router.push(`/details/${place.id}`);
+  };
+
+  const handleFavoritePress = async (e: any) => {
+    e.stopPropagation();
+    await toggleFavorite(place.id);
   };
 
   return (
@@ -34,10 +49,25 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({ place, compact = false }) 
         source={{ uri: place.imageUrl }} 
         style={[styles.image, compact && styles.compactImage]}
       />
+      <TouchableOpacity 
+        style={styles.favoriteButton} 
+        onPress={handleFavoritePress}
+      >
+        <Ionicons 
+          name={isFavorite ? "heart" : "heart-outline"} 
+          size={24} 
+          color={isFavorite ? colors.error : colors.white} 
+        />
+      </TouchableOpacity>
       <View style={styles.content}>
-        <Text style={styles.name} numberOfLines={1}>
-          {place.name}
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.name} numberOfLines={1}>
+            {place.name}
+          </Text>
+          {showDistance && distance !== undefined && (
+            <Text style={styles.distance}>{distance.toFixed(1)} km</Text>
+          )}
+        </View>
         <View style={styles.ratingContainer}>
           <RatingStars rating={place.rating} size={14} />
           <Text style={styles.ratingText}>({place.totalRatings})</Text>
@@ -93,14 +123,34 @@ const styles = StyleSheet.create({
   compactImage: {
     height: 150,
   },
+  favoriteButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: 20,
+    padding: 8,
+    zIndex: 1,
+  },
   content: {
     padding: 12,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
   },
   name: {
     fontSize: 18,
     fontWeight: 'bold',
     color: colors.text,
-    marginBottom: 4,
+    flex: 1,
+  },
+  distance: {
+    fontSize: 12,
+    color: colors.primary,
+    fontWeight: '500',
   },
   ratingContainer: {
     flexDirection: 'row',

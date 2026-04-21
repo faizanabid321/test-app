@@ -22,3 +22,6 @@ export interface PlacesResponse {
   total: number;
   page: number;
 }
+
+
+export type SortOption = 'rating' | 'price' | 'distance';

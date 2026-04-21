@@ -1,6 +1,6 @@
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { colors } from '@/constants/colors';
+import { Tabs } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { colors } from "@/constants/colors";
 
 export default function TabLayout() {
   return (
@@ -20,14 +20,14 @@ export default function TabLayout() {
         },
         headerTintColor: colors.primary,
         headerTitleStyle: {
-          fontWeight: '600',
+          fontWeight: "600",
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Discover',
+          title: "Discover",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="compass" size={size} color={color} />
           ),
@@ -36,16 +36,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: 'Search',
+          title: "Search",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favorites",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="heart" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 import {
   View,
   TextInput,
@@ -6,18 +6,19 @@ import {
   StyleSheet,
   RefreshControl,
   Text,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { usePlaces } from '@/hooks/usePlaces';
-import { PlaceCard } from '@/components/PlaceCard';
-import { LoadingIndicator } from '@/components/LoadingIndicator';
-import { ErrorMessage } from '@/components/ErrorMessage';
-import { CategoryFilter } from '@/components/CategoryFilter';
-import { colors } from '@/constants/colors';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { usePlaces } from "@/hooks/usePlaces";
+import { PlaceCard } from "@/components/PlaceCard";
+import { LoadingIndicator } from "@/components/LoadingIndicator";
+import { ErrorMessage } from "@/components/ErrorMessage";
+import { CategoryFilter } from "@/components/CategoryFilter";
+import { colors } from "@/constants/colors";
 
 export default function SearchScreen() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const { places, loading, error, refetch, setCategory, currentCategory } = usePlaces();
+  const [searchQuery, setSearchQuery] = useState("");
+  const { places, loading, error, refetch, setCategory, currentCategory } =
+    usePlaces();
 
   const filteredPlaces = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -28,7 +29,7 @@ export default function SearchScreen() {
       (place) =>
         place.name.toLowerCase().includes(query) ||
         place.description.toLowerCase().includes(query) ||
-        place.category.toLowerCase().includes(query)
+        place.category.toLowerCase().includes(query),
     );
   }, [places, searchQuery]);
 
@@ -59,17 +60,17 @@ export default function SearchScreen() {
               name="close-circle"
               size={20}
               color={colors.textLight}
-              onPress={() => setSearchQuery('')}
+              onPress={() => setSearchQuery("")}
             />
           )}
         </View>
       </View>
-      
+
       {/* Search screen ka apna Category wrapper */}
       <View style={styles.categoryWrapper}>
-        <CategoryFilter 
-          selectedCategory={currentCategory} 
-          onSelectCategory={setCategory} 
+        <CategoryFilter
+          selectedCategory={currentCategory}
+          onSelectCategory={setCategory}
         />
       </View>
 
@@ -85,9 +86,15 @@ export default function SearchScreen() {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="search-outline" size={64} color={colors.textLighter} />
+            <Ionicons
+              name="search-outline"
+              size={64}
+              color={colors.textLighter}
+            />
             <Text style={styles.emptyText}>No places found</Text>
-            <Text style={styles.emptySubtext}>Try a different search term or category</Text>
+            <Text style={styles.emptySubtext}>
+              Try a different search term or category
+            </Text>
           </View>
         }
       />
@@ -109,8 +116,8 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.surface,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -135,13 +142,13 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   emptyContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 48,
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.text,
     marginTop: 16,
   },

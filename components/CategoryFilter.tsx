@@ -55,9 +55,11 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 0, // Don't expand
+    width: '100%',
   },
   contentContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     gap: 10,
   },
   categoryButton: {
