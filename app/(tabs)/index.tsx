@@ -1,25 +1,61 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+} from 'react-native';
+import { usePlaces } from '@/hooks/usePlaces';
+import { PlaceCard } from '@/components/PlaceCard';
+import { LoadingIndicator } from '@/components/LoadingIndicator';
+import { ErrorMessage } from '@/components/ErrorMessage';
+import { CategoryFilter } from '@/components/CategoryFilter';
+import { colors } from '@/constants/colors';
 
-const app = () => {
+export default function DiscoverScreen() {
+  const { 
+    places, 
+    loading, 
+    error, 
+    refetch, 
+    setCategory, 
+    currentCategory 
+  } = usePlaces();
+
+  if (loading && places.length === 0) {
+    return <LoadingIndicator />;
+  }
+
+  if (error && places.length === 0) {
+    return <ErrorMessage message={error} onRetry={refetch} />;
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>To do app</Text>
+      <CategoryFilter 
+        selectedCategory={currentCategory} 
+        onSelectCategory={setCategory} 
+      />
+      <FlatList
+        data={places}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <PlaceCard place={item} />}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refetch} />
+        }
+        contentContainerStyle={styles.listContent}
+      />
     </View>
-  )
+  );
 }
-
-export default app
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    flexDirection:'column',
+    flex: 1,
+    backgroundColor: colors.background,
   },
-  text:{
-    color:'Black',
-    fontSize:42,
-    fontWeight:'bold',
-    textAlign:'center',
-  }
-})
+  listContent: {
+    paddingVertical: 8,
+  },
+});
