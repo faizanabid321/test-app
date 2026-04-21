@@ -5,6 +5,7 @@ import {
   FlatList,
   StyleSheet,
   RefreshControl,
+  Text,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { usePlaces } from '@/hooks/usePlaces';
@@ -41,31 +42,38 @@ export default function SearchScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchBar}>
-        <Ionicons name="search" size={20} color={colors.textLight} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search places, restaurants, parks..."
-          placeholderTextColor={colors.textLighter}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          clearButtonMode="while-editing"
-        />
-        {searchQuery.length > 0 && (
-          <Ionicons
-            name="close-circle"
-            size={20}
-            color={colors.textLight}
-            onPress={() => setSearchQuery('')}
+      {/* Search Bar */}
+      <View style={styles.searchWrapper}>
+        <View style={styles.searchBar}>
+          <Ionicons name="search" size={20} color={colors.textLight} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search places, restaurants, parks..."
+            placeholderTextColor={colors.textLighter}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            clearButtonMode="while-editing"
           />
-        )}
+          {searchQuery.length > 0 && (
+            <Ionicons
+              name="close-circle"
+              size={20}
+              color={colors.textLight}
+              onPress={() => setSearchQuery('')}
+            />
+          )}
+        </View>
       </View>
       
-      <CategoryFilter 
-        selectedCategory={currentCategory} 
-        onSelectCategory={setCategory} 
-      />
+      {/* Search screen ka apna Category wrapper */}
+      <View style={styles.categoryWrapper}>
+        <CategoryFilter 
+          selectedCategory={currentCategory} 
+          onSelectCategory={setCategory} 
+        />
+      </View>
 
+      {/* Results List */}
       <FlatList
         data={filteredPlaces}
         keyExtractor={(item) => item.id}
@@ -79,7 +87,7 @@ export default function SearchScreen() {
           <View style={styles.emptyContainer}>
             <Ionicons name="search-outline" size={64} color={colors.textLighter} />
             <Text style={styles.emptyText}>No places found</Text>
-            <Text style={styles.emptySubtext}>Try a different search term</Text>
+            <Text style={styles.emptySubtext}>Try a different search term or category</Text>
           </View>
         }
       />
@@ -92,16 +100,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  searchWrapper: {
+    backgroundColor: colors.white,
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.white,
-    margin: 16,
+    backgroundColor: colors.surface,
     paddingHorizontal: 12,
     paddingVertical: 10,
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
     gap: 8,
   },
   searchInput: {
@@ -110,8 +123,16 @@ const styles = StyleSheet.create({
     color: colors.text,
     padding: 0,
   },
+  categoryWrapper: {
+    backgroundColor: colors.white,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
   listContent: {
     paddingVertical: 8,
+    paddingBottom: 16,
   },
   emptyContainer: {
     alignItems: 'center',

@@ -32,10 +32,14 @@ export default function DiscoverScreen() {
 
   return (
     <View style={styles.container}>
-      <CategoryFilter 
-        selectedCategory={currentCategory} 
-        onSelectCategory={setCategory} 
-      />
+      {/* Discover screen ka apna Category wrapper */}
+      <View style={styles.categoryWrapper}>
+        <CategoryFilter 
+          selectedCategory={currentCategory} 
+          onSelectCategory={setCategory} 
+        />
+      </View>
+
       <FlatList
         data={places}
         keyExtractor={(item) => item.id}
@@ -55,7 +59,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  categoryWrapper: {
+    backgroundColor: colors.white,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
   listContent: {
     paddingVertical: 8,
+    paddingBottom: 16,
   },
 });

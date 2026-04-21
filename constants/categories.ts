@@ -1,12 +1,12 @@
 export const categories = [
-  { id: 'all', name: 'All', icon: 'view-dashboard' },
-  { id: 'restaurant', name: 'Restaurants', icon: 'silverware-fork-knife' },
-  { id: 'park', name: 'Parks', icon: 'tree' },
-  { id: 'historical', name: 'Historical', icon: 'castle' },
-  { id: 'cafe', name: 'Cafes', icon: 'coffee' },
-  { id: 'entertainment', name: 'Entertainment', icon: 'gamepad-variant' },
-  { id: 'shopping', name: 'Shopping', icon: 'shopping' },
-  { id: 'hotel', name: 'Hotels', icon: 'hotel' },
+  { id: 'all', name: 'All', icon: 'apps-outline' },
+  { id: 'restaurant', name: 'Restaurants', icon: 'restaurant-outline' },
+  { id: 'park', name: 'Parks', icon: 'leaf-outline' },
+  { id: 'historical', name: 'Historical', icon: 'business-outline' },
+  { id: 'cafe', name: 'Cafes', icon: 'cafe-outline' },
+  { id: 'entertainment', name: 'Entertainment', icon: 'game-controller-outline' },
+  { id: 'shopping', name: 'Shopping', icon: 'cart-outline' },
+  { id: 'hotel', name: 'Hotels', icon: 'bed-outline' },
 ] as const;
 
-export type CategoryId = typeof categories[number]['id'];
+export type CategoryId = typeof categories[number]['id'];0

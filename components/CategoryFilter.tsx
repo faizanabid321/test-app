@@ -1,4 +1,3 @@
-// components/CategoryFilter.tsx
 import React from 'react';
 import { 
   ScrollView, 
@@ -6,9 +5,14 @@ import {
   Text, 
   StyleSheet 
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { categories, CategoryId } from '@/constants/categories';
 import { colors } from '@/constants/colors';
+
+interface CategoryFilterProps {
+  selectedCategory: CategoryId;
+  onSelectCategory: (category: CategoryId) => void;
+}
 
 export const CategoryFilter: React.FC<CategoryFilterProps> = ({ 
   selectedCategory, 
@@ -19,7 +23,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
       horizontal 
       showsHorizontalScrollIndicator={false}
       style={styles.container}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={styles.contentContainer}
     >
       {categories.map((category) => (
         <TouchableOpacity
@@ -30,9 +34,9 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
           ]}
           onPress={() => onSelectCategory(category.id)}
         >
-          <MaterialCommunityIcons 
+          <Ionicons 
             name={category.icon as any} 
-            size={20} 
+            size={18} 
             color={selectedCategory === category.id ? colors.white : colors.primary}
           />
           <Text
@@ -51,33 +55,25 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.surface,
-    maxHeight: 60,
+    flexGrow: 0, // Don't expand
   },
-  content: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    gap: 8,
+  contentContainer: {
+    gap: 10,
   },
   categoryButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     gap: 6,
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
   },
   selectedButton: {
     backgroundColor: colors.primary,
   },
   categoryText: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.primary,
     fontWeight: '500',
   },
